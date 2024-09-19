@@ -1,4 +1,4 @@
-name: Build React App 1
+name: Build React App
 
 on:
   push:
@@ -34,25 +34,31 @@ jobs:
           name: build
           path: build/
 
-      - name: Install SonarScanner
-        run: npm install -g sonarqube-scanner
-
       - name: Install Dependency-Check
         run: |
-          sudo apt-get update
-          sudo apt-get install -y dependency-check
+          wget https://github.com/jeremylong/DependencyCheck/releases/download/v8.1.2/dependency-check-8.1.2-release.zip
+          unzip dependency-check-8.1.2-release.zip
+          sudo mv dependency-check /usr/local/bin/
 
-      - name: Run Dependency Check
-        run: sudo ./dependency-check.sh --project "FE" --scan . --format HTML --out dependency-check-report.html
+      - name: Run Dependency-Check
+        run: |
+          dependency-check/bin/dependency-check.sh \
+            --project "FE" \
+            --scan . \
+            --format HTML \
+            --out dependency-check-report.html
+
+      - name: Install SonarScanner
+        run: npm install -g sonarqube-scanner
 
       - name: Run SonarQube analysis
         run: |
           sonar-scanner \
-          -Dsonar.projectKey=youtube-clone  # Replace with your existing project key
-          -Dsonar.sources=. \
-          -Dsonar.host.url=https://4acd-59-145-123-10.ngrok-free.app \
-          -Dsonar.token=sqp_88cbd239942f7af82983d23d805d55e3b173bd1a \
-          -Dsonar.javascript.node.maxspace=8192 \
-          -Dsonar.dependencyCheck.summarize=true \
-          -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html \
-          -Dsonar.exclusions=**/*.js,**/*.ts,**/*.tsx
+            -Dsonar.projectKey=youtube-clone  # Replace with your existing project key
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://7997-59-145-123-10.ngrok-free.app \
+            -Dsonar.token=sqp_88cbd239942f7af82983d23d805d55e3b173bd1a \
+            -Dsonar.javascript.node.maxspace=8192 \
+            -Dsonar.dependencyCheck.summarize=true \
+            -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html \
+            -Dsonar.exclusions=**/*.js,**/*.ts,**/*.tsx
