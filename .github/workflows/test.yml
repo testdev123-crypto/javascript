@@ -1,0 +1,58 @@
+name: Build React App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.9.0'  # Update this to the latest Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build/
+
+      - name: Install SonarScanner
+        run: npm install -g sonarqube-scanner
+
+      - name: Install Dependency-Check
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dependency-check
+
+      - name: Run Dependency Check
+        run: sudo ./dependency-check.sh --project "FE" --scan . --format HTML --out dependency-check-report.html
+
+      - name: Run SonarQube analysis
+        run: |
+          sonar-scanner \
+          -Dsonar.projectKey=youtube-clone  # Replace with your existing project key
+          -Dsonar.sources=. \
+          -Dsonar.host.url=https://4acd-59-145-123-10.ngrok-free.app \
+          -Dsonar.token=sqp_88cbd239942f7af82983d23d805d55e3b173bd1a \
+          -Dsonar.javascript.node.maxspace=8192 \
+          -Dsonar.dependencyCheck.summarize=true \
+          -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html \
+          -Dsonar.exclusions=**/*.js,**/*.ts,**/*.tsx
