@@ -121,50 +121,53 @@ function Sidebar() {
             <img className="w-32" src={logo} alt="" />
           </Link>
         </div>
-        <div className=" flex flex-col gap-y-6">
-          {categories.map((e) => {
+      <div className="flex flex-col gap-y-6">
+  {categories?.map((e) => {
+    if (sidebarExtended) {
+      return (
+        <button
+          onClick={() => {
+            dispatch(setSelectedCategory(e.name));
             if (sidebarExtended) {
-              return (
-                <button
-                  onClick={() => {
-                    dispatch(setSelectedCategory(e.name));
-                    if (sidebarExtended) {
-                      dispatch(setSidebarExtendedValue(false));
-                      setSidebarExtended(false);
-                    }
-
-                    if (e.name === "Home") {
-                      pageRoute(`/`);
-                    } else {
-                      pageRoute(`/feed/${e.name}`);
-                    }
-                  }}
-                  key={e.id}
-                >
-                  <div
-                    style={{
-                      backgroundColor:
-                        selectedCategory === e.name
-                          ? "#f2f2f2"
-                          : darkMode
-                          ? "#131417"
-                          : "#fff",
-                      borderRadius:
-                        selectedCategory === e.name ? "10px" : "0px",
-                    }}
-                    className="flex items-center gap-x-4 ml-2 px-2 py-2"
-                  >
-                    {selectedCategory === e.name ? e.active : e.icon}
-
-                    <h4 className="text-md font-semibold tracking-wide">
-                      {e.name}
-                    </h4>
-                  </div>
-                </button>
-              );
+              dispatch(setSidebarExtendedValue(false));
+              setSidebarExtended(false);
             }
-          })}
-        </div>
+
+            if (e.name === "Home") {
+              pageRoute(`/`);
+            } else {
+              pageRoute(`/feed/${e.name}`);
+            }
+          }}
+          key={e.id}
+        >
+          <div
+            style={{
+              backgroundColor:
+                selectedCategory === e.name
+                  ? "#f2f2f2"
+                  : darkMode
+                  ? "#131417"
+                  : "#fff",
+              borderRadius:
+                selectedCategory === e.name ? "10px" : "0px",
+            }}
+            className="flex items-center gap-x-4 ml-2 px-2 py-2"
+          >
+            {selectedCategory === e.name ? e.active : e.icon}
+
+            <h4 className="text-md font-semibold tracking-wide">
+              {e.name}
+            </h4>
+          </div>
+        </button>
+      );
+    }
+
+    return null; // Add this return statement
+  })}
+</div>
+
       </div>
     </>
   );
