@@ -43,9 +43,8 @@ jobs:
 
       - name: Run SonarQube analysis
         run: |
-          sonar-scanner \
-            -Dsonar.projectKey=js \
+          mvn clean verify sonar:sonar \
+            -Dsonar.projectKey=rohan_myrepository \
             -Dsonar.host.url=https://7997-59-145-123-10.ngrok-free.app \
-            -Dsonar.login=sqp_5f0e07804da25cc8200e19dcfcb118ba7c914f4b \
-            -Dsonar.dependencyCheck.summarize=true \
-            -Dsonar.dependencyCheck.htmlReportPath=target/dependency-check-report.html
+            -Dsonar.login=squ_75103e00bdd50172378e56044918a082b018b803 
+            
