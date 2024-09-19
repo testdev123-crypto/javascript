@@ -35,16 +35,9 @@ jobs:
           path: build/
 
       - name: Install SonarScanner
-        run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-          unzip sonar-scanner-cli-4.8.0.2856-linux.zip
-          export PATH=$PATH:$PWD/sonar-scanner-4.8.0.2856-linux/bin
-          sonar-scanner --version    
+        run: npm install -g sonarqube-scanner   
 
       - name: Run SonarQube analysis
-        run: |
-          mvn clean verify sonar:sonar \
-            -Dsonar.projectKey=rohan_myrepository \
-            -Dsonar.host.url=https://7997-59-145-123-10.ngrok-free.app \
-            -Dsonar.login=squ_75103e00bdd50172378e56044918a082b018b803 
+        run: sonar-scanner -Dsonar.host.url=https://7997-59-145-123-10.ngrok-free.app -Dsonar.token=squ_75103e00bdd50172378e56044918a082b018b803
+           
             
