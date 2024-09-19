@@ -57,8 +57,8 @@ jobs:
           sonar-scanner \
             -Dsonar.projectKey=youtube-clone \
             -Dsonar.sources=. \
-            -Dsonar.host.url=https://7997-59-145-123-10.ngrok-free.app \
-            -Dsonar.token=https://08d8-59-145-123-10.ngrok-free.app \
+            -Dsonar.host.url=https://08d8-59-145-123-10.ngrok-free.app \
+            -Dsonar.token=sqp_88cbd239942f7af82983d23d805d55e3b173bd1a \
             -Dsonar.javascript.node.maxspace=8192 \
             -Dsonar.dependencyCheck.summarize=true \
             -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html \
