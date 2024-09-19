@@ -1,4 +1,4 @@
-name: Build React App
+name: Build React App1
 
 on:
   push:
@@ -39,10 +39,11 @@ jobs:
           wget https://github.com/jeremylong/DependencyCheck/releases/download/v8.1.2/dependency-check-8.1.2-release.zip
           unzip dependency-check-8.1.2-release.zip
           sudo mv dependency-check /usr/local/bin/
+          chmod +x /usr/local/bin/dependency-check/bin/dependency-check.sh
 
       - name: Run Dependency-Check
         run: |
-          dependency-check/bin/dependency-check.sh \
+          /usr/local/bin/dependency-check/bin/dependency-check.sh \
             --project "FE" \
             --scan . \
             --format HTML \
