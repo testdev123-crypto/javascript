@@ -38,6 +38,6 @@ jobs:
         run: npm install -g sonarqube-scanner   
 
       - name: Run SonarQube analysis
-        run: sonar-scanner -Dsonar.host.url=https://7997-59-145-123-10.ngrok-free.app -Dsonar.token=squ_75103e00bdd50172378e56044918a082b018b803
+        run: sonar-scanner -Dsonar.host.url=https://08d8-59-145-123-10.ngrok-free.app -Dsonar.token=squ_75103e00bdd50172378e56044918a082b018b803
            
             
