@@ -1,0 +1,63 @@
+name: Build React App12
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.9.0'  # Update this to the latest Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build/
+
+      - name: Install Dependency-Check
+        run: |
+          wget https://github.com/jeremylong/DependencyCheck/releases/download/v8.1.2/dependency-check-8.1.2-release.zip
+          unzip dependency-check-8.1.2-release.zip
+          sudo mv dependency-check /usr/local/bin/
+          chmod +x /usr/local/bin/dependency-check/bin/dependency-check.sh
+
+      - name: Run Dependency-Check
+        run: |
+          /usr/local/bin/dependency-check/bin/dependency-check.sh \
+            --project "FE" \
+            --scan . \
+            --format HTML \
+            --out dependency-check-report.html
+
+      - name: Install SonarScanner
+        run: npm install -g sonarqube-scanner
+
+      - name: Run SonarQube analysis
+        run: |
+          sonar-scanner \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=http://13.126.193.120:9000/ \
+            -Dsonar.token=sqa_be7f5853b2ee73a56e10e61ff99021f0451da1ec \
+            -Dsonar.javascript.node.maxspace=8192 \
+            -Dsonar.dependencyCheck.summarize=true \
+            -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html 
