@@ -55,9 +55,11 @@ jobs:
       - name: Run SonarQube analysis
         run: |
           sonar-scanner \
+            -Dsonar.projectKey=javascript \
+            -Dsonar.projectName='javascript' \
             -Dsonar.sources=. \
-            -Dsonar.host.url=http://13.126.193.120:9000/ \
-            -Dsonar.token=sqa_be7f5853b2ee73a56e10e61ff99021f0451da1ec \
+            -Dsonar.host.url=https://1a0d-59-145-123-10.ngrok-free.app \
+            -Dsonar.token=sqp_a986e57c25e5195f761e01f4723e89479f49c49d \
             -Dsonar.javascript.node.maxspace=8192 \
             -Dsonar.dependencyCheck.summarize=true \
             -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html 
