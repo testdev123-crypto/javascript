@@ -58,7 +58,7 @@ jobs:
             -Dsonar.projectKey=javascript \
             -Dsonar.projectName='javascript' \
             -Dsonar.sources=. \
-            -Dsonar.host.url=https://1a0d-59-145-123-10.ngrok-free.app \
+            -Dsonar.host.url=https://29ed-59-145-123-10.ngrok-free.app \
             -Dsonar.token=sqp_a986e57c25e5195f761e01f4723e89479f49c49d \
             -Dsonar.javascript.node.maxspace=8192 \
             -Dsonar.dependencyCheck.summarize=true \
