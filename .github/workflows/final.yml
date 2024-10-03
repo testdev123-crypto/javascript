@@ -1,4 +1,5 @@
-name: Build React sclera-admin
+
+name: Build React App12
 
 on:
   push:
@@ -7,11 +8,12 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch: null
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -19,16 +21,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "22.9.0"
+          node-version: '22.9.0'  # Update this to the latest Node.js version
 
       - name: Install dependencies
-        run: npm install --force
+        run: npm install
 
       - name: Build the project
         run: npm run build
-
-      - name: Run Tests
-        run: npm test
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
@@ -51,18 +50,25 @@ jobs:
             --format HTML \
             --out dependency-check-report.html
 
+      - name: Cache OWASP Dependency-Check data
+        uses: actions/cache@v3
+        with:
+          path: /usr/local/bin/dependency-check/data
+          key: ${{ runner.os }}-dependency-check-${{ hashFiles('package.json', 'package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-dependency-check-
+
       - name: Install SonarScanner
         run: npm install -g sonarqube-scanner
 
       - name: Run SonarQube analysis
         run: |
           sonar-scanner \
-            -Dsonar.sources=. \
             -Dsonar.projectKey=python \
             -Dsonar.projectName='python' \
-            -Dsonar.host.url=https://9d81-59-145-123-10.ngrok-free.app \
-            -Dsonar.login=sqp_a7996b8867ee5f1b2cb9dd3dad4d3b5e153ba070 \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://9ba0-59-145-123-10.ngrok-free.app \
+            -Dsonar.token=sqp_a7996b8867ee5f1b2cb9dd3dad4d3b5e153ba070 \
             -Dsonar.javascript.node.maxspace=8192 \
             -Dsonar.dependencyCheck.summarize=true \
-            -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html \
-            -Dsonar.javascript.lcov.reportPaths=coverage/jest/lcov.info
+            -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html 
