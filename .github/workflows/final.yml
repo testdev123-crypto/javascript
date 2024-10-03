@@ -50,11 +50,11 @@ jobs:
             --format HTML \
             --out dependency-check-report.html
 
-      - name: Cache OWASP Dependency-Check data
+      - name: Cache OWASP Dependency-Check data (Test Key)
         uses: actions/cache@v3
         with:
           path: /usr/local/bin/dependency-check/data
-          key: ${{ runner.os }}-dependency-check-${{ hashFiles('package.json', 'package-lock.json') }}
+          key: ${{ runner.os }}-dependency-check-test-key
           restore-keys: |
             ${{ runner.os }}-dependency-check-
 
