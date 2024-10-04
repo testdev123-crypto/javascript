@@ -1,4 +1,3 @@
-
 name: Build React App12
 
 on:
@@ -35,6 +34,16 @@ jobs:
           name: build
           path: build/
 
+      - name: Cache OWASP Dependency-Check data
+        uses: actions/cache@v3
+        with:
+          path: |
+            /usr/local/bin/dependency-check/data
+            /usr/local/bin/dependency-check/odcTemp
+          key: ${{ runner.os }}-dependency-check-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-dependency-check-
+
       - name: Install Dependency-Check
         run: |
           wget https://github.com/jeremylong/DependencyCheck/releases/download/v10.0.4/dependency-check-10.0.4-release.zip
@@ -50,25 +59,17 @@ jobs:
             --format HTML \
             --out dependency-check-report.html
 
-      - name: Cache OWASP Dependency-Check data (Test Key)
-        uses: actions/cache@v3
-        with:
-          path: /usr/local/bin/dependency-check/data
-          key: ${{ runner.os }}-dependency-check-test-key
-          restore-keys: |
-            ${{ runner.os }}-dependency-check-
-
       - name: Install SonarScanner
         run: npm install -g sonarqube-scanner
 
       - name: Run SonarQube analysis
         run: |
           sonar-scanner \
-            -Dsonar.projectKey=python \
-            -Dsonar.projectName='python' \
+            -Dsonar.projectKey=javascript  \
+            -Dsonar.projectName='javascript ' \
             -Dsonar.sources=. \
-            -Dsonar.host.url=https://9ba0-59-145-123-10.ngrok-free.app \
-            -Dsonar.token=sqp_a7996b8867ee5f1b2cb9dd3dad4d3b5e153ba070 \
+            -Dsonar.host.url=https://1df5-59-145-123-10.ngrok-free.app \
+            -Dsonar.token=sqp_015334cad60db0d8bb9185c6aad4d86928427728 \
             -Dsonar.javascript.node.maxspace=8192 \
             -Dsonar.dependencyCheck.summarize=true \
-            -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html 
+            -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html
