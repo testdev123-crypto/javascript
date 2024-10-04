@@ -57,7 +57,8 @@ jobs:
             --project "FE" \
             --scan . \
             --format HTML \
-            --out dependency-check-report.html
+            --out dependency-check-report.html \
+            --disableCentral  # Disable Central Search
 
       - name: Install SonarScanner
         run: npm install -g sonarqube-scanner
