@@ -58,7 +58,9 @@ jobs:
             --scan . \
             --format HTML \
             --out dependency-check-report.html \
-            --disableCentral  # Disable Central Search
+            --disableCentral  # Disable Central Search \
+            --connectionTimeout 60000 \
+            --socketTimeout 60000
 
       - name: Install SonarScanner
         run: npm install -g sonarqube-scanner
