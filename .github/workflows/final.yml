@@ -1,4 +1,4 @@
-name: Build React App12
+name: testing dev
 
 on:
   push:
