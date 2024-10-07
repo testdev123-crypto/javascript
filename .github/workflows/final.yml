@@ -51,6 +51,12 @@ jobs:
           sudo rsync -a dependency-check/ /usr/local/bin/dependency-check/
           chmod +x /usr/local/bin/dependency-check/bin/dependency-check.sh
 
+      - name: Upload NVD data
+        uses: actions/upload-artifact@v3
+        with:
+          name: nvd-data
+          path: /usr/local/bin/dependency-check/data
+
       - name: Download NVD data
         uses: actions/download-artifact@v3
         with:
