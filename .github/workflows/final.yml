@@ -62,6 +62,11 @@ jobs:
         with:
           name: nvd-data
 
+      - name: Force NVD Update
+        run: |
+          /usr/local/bin/dependency-check/bin/dependency-check.sh \
+            --updateonly
+
       - name: Check number of NVD records in cache
         run: |
           echo "Number of NVD records:"
