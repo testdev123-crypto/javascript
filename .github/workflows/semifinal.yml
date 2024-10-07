@@ -46,7 +46,7 @@ jobs:
             
       - name: Force NVD Update
         run: |
-          /usr/local/bin/dependency-check/bin/dependency-check.sh \
+          ./dependency-check/bin/dependency-check.sh \
             --updateonly
             
       - name: Install Dependency-Check
