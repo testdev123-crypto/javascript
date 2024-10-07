@@ -49,8 +49,12 @@ jobs:
         run: |
           wget https://github.com/jeremylong/DependencyCheck/releases/download/v10.0.4/dependency-check-10.0.4-release.zip
           unzip dependency-check-10.0.4-release.zip
-          sudo mv dependency-check /usr/local/bin/
-          chmod +x /usr/local/bin/dependency-check/bin/dependency-check.sh
+           if [ -d "/usr/local/bin/dependency-check" ]; then
+            sudo rm -rf /usr/local/bin/dependency-check
+          fi
+          sudo mv dependency-check /usr/local/bin/dependency-check
+          sudo chmod +x /usr/local/bin/dependency-check/bin/dependency-check.sh
+
 
       - name: Print Current Working Directory
         run: pwd
