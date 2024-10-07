@@ -33,17 +33,17 @@ jobs:
         with:
           name: build
           path: build/
+          
+      - name: Upload NVD data
+        uses: actions/upload-artifact@v3
+        with:
+          name: nvd-data
+          path: /usr/local/bin/dependency-check/data    
 
       - name: Download NVD data
         uses: actions/download-artifact@v3
         with:
           name: nvd-data
-
-      - name: Upload NVD data
-        uses: actions/upload-artifact@v3
-        with:
-          name: nvd-data
-          path: /usr/local/bin/dependency-check/data
 
       - name: Install Dependency-Check
         run: |
