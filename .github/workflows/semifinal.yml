@@ -33,17 +33,6 @@ jobs:
         with:
           name: build
           path: build/
-          
-      - name: Upload NVD data
-        uses: actions/upload-artifact@v3
-        with:
-          name: nvd-data
-          path: /usr/local/bin/dependency-check/data    
-
-      - name: Download NVD data
-        uses: actions/download-artifact@v3
-        with:
-          name: nvd-data
 
       - name: Install Dependency-Check
         run: |
@@ -67,11 +56,11 @@ jobs:
       - name: Run SonarQube analysis
         run: |
           sonar-scanner \
-            -Dsonar.projectKey=python \
-            -Dsonar.projectName='python' \
+            -Dsonar.projectKey=javascript \
+            -Dsonar.projectName='javascript' \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://853c-59-145-123-10.ngrok-free.app \
-            -Dsonar.token=sqp_a7996b8867ee5f1b2cb9dd3dad4d3b5e153ba070 \
+            -Dsonar.token=sqp_015334cad60db0d8bb9185c6aad4d86928427728 \
             -Dsonar.javascript.node.maxspace=8192 \
             -Dsonar.dependencyCheck.summarize=true \
             -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html 
