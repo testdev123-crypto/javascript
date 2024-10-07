@@ -39,18 +39,18 @@ jobs:
         with:
           name: nvd-data
 
+      - name: Upload NVD data
+        uses: actions/upload-artifact@v3
+        with:
+          name: nvd-data
+          path: /usr/local/bin/dependency-check/data
+
       - name: Install Dependency-Check
         run: |
           wget https://github.com/jeremylong/DependencyCheck/releases/download/v10.0.4/dependency-check-10.0.4-release.zip
           unzip dependency-check-10.0.4-release.zip
           sudo mv dependency-check /usr/local/bin/
           chmod +x /usr/local/bin/dependency-check/bin/dependency-check.sh
-
-      - name: Upload NVD data
-        uses: actions/upload-artifact@v3
-        with:
-          name: nvd-data
-          path: /usr/local/bin/dependency-check/data
 
       - name: Run Dependency-Check
         run: |
