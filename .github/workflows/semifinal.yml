@@ -44,10 +44,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-dependency-check-
             
-      - name: Force NVD Update
-        run: |
-          ./dependency-check/bin/dependency-check.sh \
-            --updateonly
             
       - name: Install Dependency-Check
         run: |
@@ -56,6 +52,28 @@ jobs:
           sudo mv dependency-check /usr/local/bin/
           chmod +x /usr/local/bin/dependency-check/bin/dependency-check.sh
 
+      - name: Print Current Working Directory
+        run: pwd
+
+      - name: Verify Dependency-Check Directory
+        run: ls -R ./dependency-check
+
+      - name: Check Dependency-Check Extraction
+        run: ls -l dependency-check/bin/
+
+      - name: Print Current Working Directory
+        run: pwd
+
+      - name: Verify Dependency-Check Directory
+        run: ls -R ./dependency-check
+
+      - name: Check Dependency-Check Extraction
+        run: ls -l dependency-check/bin/
+
+      - name: Force NVD Update
+        run: |
+          ./dependency-check/bin/dependency-check.sh --updateonly
+          
       - name: Run Dependency-Check
         run: |
           /usr/local/bin/dependency-check/bin/dependency-check.sh \
