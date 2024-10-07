@@ -34,6 +34,21 @@ jobs:
           name: build
           path: build/
 
+      - name: Cache OWASP Dependency-Check data
+        uses: actions/cache@v3
+        with:
+          path: |
+            /usr/local/bin/dependency-check/data
+            /usr/local/bin/dependency-check/odcTemp
+          key: ${{ runner.os }}-dependency-check-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-dependency-check-
+            
+      - name: Force NVD Update
+        run: |
+          /usr/local/bin/dependency-check/bin/dependency-check.sh \
+            --updateonly
+            
       - name: Install Dependency-Check
         run: |
           wget https://github.com/jeremylong/DependencyCheck/releases/download/v10.0.4/dependency-check-10.0.4-release.zip
